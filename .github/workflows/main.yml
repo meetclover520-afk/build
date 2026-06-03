@@ -45,11 +45,14 @@ jobs:
       - name: Setup SukiSU-Ultra
         run: |
           cd project
-          curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s builtin
+          git clone https://github.com/SukiSU-Ultra/SukiSU-Ultra.git drivers/kernelsu
+          cd drivers/kernelsu
+          git checkout 544842d0f611f672f8b3c449b7f17afd57da920f
+          cd ../..
           git config --global user.email "bot@example.com"
           git config --global user.name "bot"
           git add .
-          git commit -m ksu
+          git commit -m "ksu pinned to stable version"
 
       - name: Build kernel
         run: |

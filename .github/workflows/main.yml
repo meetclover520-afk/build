@@ -30,7 +30,7 @@ jobs:
       - name: Checkout Kernel Source
         run: |
           git clone --depth=1 https://github.com/Dhollmen/Kernel_Xiaomi_Gauguin project
-          rm -rf project/drivers/kernelsu
+          
 
       - name: Setup Patches
         run: |
@@ -45,20 +45,11 @@ jobs:
       - name: Setup SukiSU-Ultra
         run: |
           cd project
-          # 1. 运行官方脚本，让它自动完成 4.19 内核 Kconfig 和 Makefile 的整合挂载
           curl -LSs "https://raw.githubusercontent.com/SukiSU-Ultra/SukiSU-Ultra/main/kernel/setup.sh" | bash -s builtin
-          
-          # 2. 进入模块目录，定向抓取并检出你指定的正确 SHA
-          cd drivers/kernelsu
-          git fetch origin 544842d0f611f672f8b3c449b7f17afd57da920f
-          git checkout 544842d0f611f672f8b3c449b7f17afd57da920f
-          cd ../..
-          
-          # 3. 提交更改以备编译
           git config --global user.email "bot@example.com"
           git config --global user.name "bot"
           git add .
-          git commit -m "ksu pinned to specific builtin SHA: 544842d0"
+          git commit -m ksu
 
       - name: Build kernel
         run: |

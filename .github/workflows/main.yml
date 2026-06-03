@@ -45,10 +45,17 @@ jobs:
       - name: Setup SukiSU-Ultra
         run: |
           cd project
-          git clone https://github.com/SukiSU-Ultra/SukiSU-Ultra.git drivers/kernelsu
-          cd drivers/kernelsu
+          # 1. 将仓库克隆到临时目录
+          git clone https://github.com/SukiSU-Ultra/SukiSU-Ultra.git SukiSU-tmp
+          cd SukiSU-tmp
+          # 2. 检出 4 月份的稳定提交
           git checkout 544842d0f611f672f8b3c449b7f17afd57da920f
-          cd ../..
+          cd ..
+          # 3. 仅提取 kernel 目录并重命名为目标目录
+          mv SukiSU-tmp/kernel drivers/kernelsu
+          # 4. 清理临时目录
+          rm -rf SukiSU-tmp
+          
           git config --global user.email "bot@example.com"
           git config --global user.name "bot"
           git add .
